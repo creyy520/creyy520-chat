@@ -1,0 +1,367 @@
+syntax = "proto3";
+import "common/common.proto";
+import "pub/wrapperspb.proto";
+import "pub/sdkws.proto";
+option go_package = "github.com/OpenIMSDK/chat/pkg/proto/organization";
+package OpenIMChat.organization;
+
+message OrganizationInfo {
+  string logoURL = 1;
+  string name = 2;
+  string homepage = 3;
+  string introduction = 4;
+  int64 createTime = 5;
+}
+
+message Department {
+  string departmentID = 1;
+  string faceURL = 2;
+  string name = 3;
+  string parentDepartmentID = 4;
+  int32 order = 5;
+  int64 createTime = 6;
+}
+
+message DepartmentNum {
+  string departmentID = 1;
+  string faceURL = 2;
+  string name = 3;
+  string parentDepartmentID = 4;
+  int32 order = 5;
+  int64 createTime = 6;
+  uint32 memberNum = 7;
+}
+
+message DepartmentMember {
+  string userID = 1;
+  string departmentID = 2;
+  string position = 3;
+  string station = 4;
+  int32 order = 5;
+  int64 entryTime = 6;
+  int64 terminationTime = 7;
+  int64 createTime = 8;
+}
+
+message DepartmentMemberUser {
+  OpenIMChat.common.UserFullInfo user = 1;
+  repeated MemberDepartment members = 2;
+}
+
+message MemberDepartment {
+  string userID = 1;
+  string departmentID = 2;
+  string position = 3;
+  string station = 4;
+  int32 order = 5;
+  int64 entryTime = 6;
+  int64 terminationTime = 7;
+  int64 createTime = 8;
+  DepartmentNum department = 9;
+}
+
+message DepartmentMemberFull {
+  string userID = 1;
+  string departmentID = 2;
+  string position = 3;
+  int64  entryTime = 4;
+  int64  terminationTime = 5;
+  int64 createTime = 6;
+  DepartmentNum department = 7;
+  OpenIMChat.common.UserFullInfo user = 8;
+}
+
+message  UserInDepartment {
+  repeated DepartmentMember departments = 1;
+}
+
+message CreateDepartmentReq{
+  string departmentID = 1;
+  string faceURL = 2;
+  string name = 3;
+  string parentDepartmentID = 4;
+  OpenIMServer.protobuf.Int32Value order = 6;
+}
+
+message CreateDepartmentResp{
+  string departmentID = 1;
+}
+
+message UpdateDepartmentReq{
+  string departmentID = 1;
+  OpenIMServer.protobuf.StringValue faceURL = 2;
+  OpenIMServer.protobuf.StringValue name = 3;
+  OpenIMServer.protobuf.StringValue parentDepartmentID = 4;
+  OpenIMServer.protobuf.Int32Value order = 5;
+}
+
+message UpdateDepartmentResp{
+}
+
+
+message GetOrganizationDepartmentReq{
+}
+
+message DepartmentInfo {
+  DepartmentNum department = 1;
+  repeated DepartmentInfo subdepartments = 2;
+}
+
+
+message GetOrganizationDepartmentResp{
+  repeated DepartmentInfo departments = 1;
+}
+
+message DeleteDepartmentReq{
+  repeated string departmentIDs = 1;
+}
+
+message DeleteDepartmentResp{
+}
+
+message GetDepartmentParentIDListReq {
+  string departmentID = 1;
+}
+
+message GetDepartmentParentIDListResp {
+  repeated string parentIDList = 1;
+}
+
+message CreateDepartmentMemberReq{
+  string userID = 1;
+  string departmentID = 2;
+  string position = 3;
+  string station = 4;
+  int32 order = 5;
+  int64 entryTime = 6;
+  int64 terminationTime = 7;
+}
+message CreateDepartmentMemberResp{
+}
+
+
+message GetUserInDepartmentReq{
+  repeated string userIDs = 1;
+}
+message GetUserInDepartmentResp{
+  repeated DepartmentMemberUser users = 1;
+}
+
+
+message UpdateUserInDepartmentReq{
+  string userID = 1;
+  string departmentID = 2;
+  OpenIMServer.protobuf.StringValue position = 3;
+  OpenIMServer.protobuf.StringValue station = 4;
+  OpenIMServer.protobuf.Int32Value order = 5;
+  OpenIMServer.protobuf.Int64Value entryTime = 6;
+  OpenIMServer.protobuf.Int64Value terminationTime = 7;
+}
+
+message UpdateUserInDepartmentResp{
+}
+
+
+message DeleteUserInDepartmentReq{
+  string userID = 1;
+  string departmentID = 2;
+}
+
+message DeleteUserInDepartmentResp{
+}
+
+message GetDepartmentRelatedGroupIDListReq {
+  repeated string departmentIDList = 1;
+}
+
+message GetDepartmentRelatedGroupIDListResp {
+  repeated string groupIDList = 1;
+}
+
+message GetUserInOrganizationReq{
+  repeated string userIDList = 1;
+}
+
+message GetUserInOrganizationResp{
+  repeated OpenIMChat.common.UserFullInfo users = 1;
+}
+
+// ####################################
+
+message GetCompleteOrganizationReq {
+}
+
+message CompleteOrganization {
+  uint32 peopleNumber = 1;
+  repeated CompleteOrganization list = 2;
+  string departmentID = 3;
+  string faceURL = 4;
+  string name = 5;
+  string parentID = 6;
+  int32 order = 7;
+  int32 departmentType = 8;
+  uint32 createTime = 9;
+  string ex = 10;
+}
+
+message GetCompleteOrganizationResp {
+  repeated CompleteOrganization list = 1;
+}
+
+
+
+message GetUsersInDepartmentReq{
+  repeated string userIDList = 1;
+}
+
+message GetUsersInDepartmentResp{
+  repeated UserInDepartment list = 1;
+}
+
+message SetOrganizationReq {
+  OpenIMServer.protobuf.StringValue logoURL = 1;
+  OpenIMServer.protobuf.StringValue name = 2;
+  OpenIMServer.protobuf.StringValue homepage = 3;
+  OpenIMServer.protobuf.StringValue introduction = 4;
+}
+
+message SetOrganizationResp {
+}
+
+message GetOrganizationReq {
+}
+
+message GetOrganizationResp {
+  string logoURL = 1;
+  string name = 2;
+  string homepage = 3;
+  string introduction = 4;
+  int64 createTime = 5;
+}
+
+message GetSubDepartmentReq {
+  string  departmentID = 1;
+}
+
+message MemberUserInfo {
+  DepartmentMember member = 1;
+  OpenIMChat.common.UserFullInfo user = 2;
+  bool disabled = 3;
+}
+
+message GetSubDepartmentResp {
+  repeated DepartmentNum departments = 1;
+  repeated MemberUserInfo members = 2;
+  repeated DepartmentNum parents = 3;
+  DepartmentNum current = 4;
+}
+
+message GetSearchDepartmentUserReq {
+  string keyword = 1;
+  OpenIMServer.sdkws.RequestPagination pagination = 2;
+}
+
+message GetSearchDepartmentUserResp {
+  uint32 total = 1;
+  repeated DepartmentMemberUser users = 2;
+}
+
+message SortDepartmentListReq {
+  string departmentID = 1;
+  string nextDepartmentID = 2;
+}
+
+message SortDepartmentListResp {
+  int32 order = 1;
+}
+
+message SortOrganizationUserListReq {
+  string departmentID = 1;
+  string userID = 2;
+  string nextUserID = 3;
+}
+
+message SortOrganizationUserListResp {
+  int32 order = 1;
+}
+
+
+message GetDepartmentReq {
+  repeated string departmentIDs = 1;
+}
+
+message GetDepartmentResp {
+  repeated Department departments = 1;
+}
+
+message GetDepartmentByNameReq {
+  repeated string names = 1;
+}
+
+message GetDepartmentByNameResp {
+  repeated Department departments = 1;
+}
+
+message MoveUserDepartment {
+  string userID = 1;
+  string departmentID = 2;
+  string currentDepartmentID = 3;
+}
+
+message MoveUserDepartmentReq {
+  repeated MoveUserDepartment moves = 1;
+}
+
+message MoveUserDepartmentResp {
+}
+
+message AddUserToUngroupedReq {
+  string userID = 1;
+}
+
+message AddUserToUngroupedResp {
+  bool ungrouped = 1;
+}
+
+message GetDepartmentParentsReq {
+  string departmentID = 1;
+}
+
+message GetDepartmentParentsResp {
+  repeated Department departments = 1;
+}
+
+service organization{
+  rpc CreateDepartment(CreateDepartmentReq) returns(CreateDepartmentResp);
+  rpc UpdateDepartment(UpdateDepartmentReq) returns(UpdateDepartmentResp);
+  rpc GetOrganizationDepartment(GetOrganizationDepartmentReq) returns(GetOrganizationDepartmentResp);
+  rpc DeleteDepartment(DeleteDepartmentReq) returns(DeleteDepartmentResp);
+  rpc GetDepartment(GetDepartmentReq) returns(GetDepartmentResp);
+
+  rpc CreateDepartmentMember(CreateDepartmentMemberReq) returns(CreateDepartmentMemberResp);
+  rpc GetUserInDepartment(GetUserInDepartmentReq) returns(GetUserInDepartmentResp);
+  rpc DeleteUserInDepartment(DeleteUserInDepartmentReq) returns(DeleteUserInDepartmentResp);
+  rpc UpdateUserInDepartment(UpdateUserInDepartmentReq) returns(UpdateUserInDepartmentResp);
+
+  rpc SetOrganization(SetOrganizationReq) returns(SetOrganizationResp);
+  rpc GetOrganization(GetOrganizationReq) returns(GetOrganizationResp);
+
+  rpc GetSubDepartment(GetSubDepartmentReq)returns(GetSubDepartmentResp);
+
+  rpc GetSearchDepartmentUser(GetSearchDepartmentUserReq)returns(GetSearchDepartmentUserResp);
+
+  rpc SortDepartmentList(SortDepartmentListReq)returns(SortDepartmentListResp);
+  rpc SortOrganizationUserList(SortOrganizationUserListReq)returns(SortOrganizationUserListResp);
+
+  rpc MoveUserDepartment(MoveUserDepartmentReq)returns(MoveUserDepartmentResp);
+
+  rpc AddUserToUngrouped(AddUserToUngroupedReq)returns(AddUserToUngroupedResp);
+
+  rpc GetDepartmentByName(GetDepartmentByNameReq)returns(GetDepartmentByNameResp);
+
+  rpc GetDepartmentParents(GetDepartmentParentsReq)returns(GetDepartmentParentsResp);
+
+}
+
+
+
